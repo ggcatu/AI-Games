@@ -1,0 +1,45 @@
+Pancakes result
+
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
+Profundidad 0 : 1 
+Profundidad 1 : 23 
+Profundidad 2 : 529 
+Profundidad 3 : 12167 
+Profundidad 4 : 279841 
+Profundidad 5 : 6436343 
+Profundidad 6 : 148035889 
+Branching factor: 23.000000
+Profundidad para nodos mayores a estados: 17.472438 
+Superio|| 620448401733242228572160.000000 
+Estados|| 620448401733239409999872.000000 
+
+
+#LEN 1
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
+Profundidad 0 : 1 
+Profundidad 1 : 23 
+Profundidad 2 : 506 
+Profundidad 3 : 11132 
+Profundidad 4 : 244904 
+Profundidad 5 : 5387888 
+Profundidad 6 : 118533536 
+Branching factor: 22.000000
+Profundidad para nodos mayores a estados: 17.723707 
+Superio|| 620448401733236457209856.000000 
+Estados|| 620448401733239409999872.000000 
+
+
+
+#LEN 2
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
+Profundidad 0 : 1 
+Profundidad 1 : 23 
+Profundidad 2 : 506 
+Profundidad 3 : 11131 
+Profundidad 4 : 244860 
+Profundidad 5 : 5386437 
+Profundidad 6 : 118490988 
+Branching factor: 21.000000
+Profundidad para nodos mayores a estados: 17.994523 
+Superio|| 620448401733240483741696.000000 
+Estados|| 620448401733239409999872.000000 

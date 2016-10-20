@@ -1,0 +1,52 @@
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 
+Profundidad 0 : 1 
+Profundidad 1 : 22 
+Profundidad 2 : 484 
+Profundidad 3 : 10648 
+Profundidad 4 : 234256 
+Profundidad 5 : 5153632 
+Profundidad 6 : 113379904 
+Profundidad 7 : -1800609408 
+Branching factor: -15.000000
+Profundidad para nodos mayores a estados: nan 
+Superio|| nan 
+Estados|| 403291461126605650322784256.000000 
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 
+Profundidad 0 : 1 
+Profundidad 1 : 22 
+Profundidad 2 : 297 
+Profundidad 3 : 3332 
+Profundidad 4 : 34917 
+Profundidad 5 : 359044 
+Profundidad 6 : 3685933 
+Profundidad 7 : 37916082 
+Branching factor: 10.000000
+Profundidad para nodos mayores a estados: 26.605619 
+Superio|| 403291461126604550811156480.000000 
+Estados|| 403291461126605650322784256.000000 
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 
+Profundidad 0 : 1 
+Profundidad 1 : 22 
+Profundidad 2 : 297 
+Profundidad 3 : 3234 
+Profundidad 4 : 31696 
+Profundidad 5 : 295838 
+Profundidad 6 : 2710746 
+Profundidad 7 : 24748834 
+Branching factor: 9.000000
+Profundidad para nodos mayores a estados: 27.881402 
+Superio|| 403291461126603176421621760.000000 
+Estados|| 403291461126605650322784256.000000 
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 
+Profundidad 0 : 1.000000 
+Profundidad 1 : 22.000000 
+Profundidad 2 : 484.000000 
+Profundidad 3 : 10648.000000 
+Profundidad 4 : 234256.000000 
+Profundidad 5 : 5153632.000000 
+Profundidad 6 : 113379904.000000 
+Profundidad 7 : 2494357888.000000 
+Branching factor: 22.000000
+Profundidad para nodos mayores a estados: 19.819107 
+Superio|| 403291461126602764104761344.000000 
+Estados|| 403291461126605650322784256.000000 

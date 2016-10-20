@@ -10,14 +10,18 @@ Copyright (C) 2013 by the PSVN Research Group, University of Alberta
 #include <sys/time.h>
 #include <vector>
 #include <iostream>
+#include <signal.h>
 #include <queue>
 #include <map>
 #include <cmath>
+#include <time.h>
 
 #define  MAX_LINE_LENGTH 999 
 
 using namespace std;
-
+double childCount = 0;
+double t = -1;
+state_t stateI;
 
 unsigned mtable0[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 unsigned mtable1[16] = {1,0,1,2,2,1,2,3,3,2,3,4,4,3,4,5};
@@ -37,6 +41,21 @@ unsigned mtable14[16] = {5,4,3,4,4,3,2,3,3,2,1,2,2,1,0,1};
 unsigned mtable15[16] = {6,5,4,3,5,4,3,2,4,3,2,1,3,2,1,0};
 
 unsigned* mtable[16] = {mtable0,mtable1,mtable2,mtable3,mtable4,mtable5,mtable6,mtable7,mtable8,mtable9,mtable10,mtable11,mtable12,mtable13,mtable14,mtable15};
+
+void printing(int len){
+    printf("X, A*, 15Puzzle, \"");
+    print_state(stdout, &stateI);
+    if(len < 0){
+        printf("\", na, na, na, na\n");
+    } else {
+        printf("\", %d, %.0lf, %f, %.5e\n", len, childCount, t, childCount/t);
+    }
+}
+
+void sig_handler(int SIG){
+    printing(-1);
+    exit(0);
+}
 
 
 class Node{
@@ -103,7 +122,7 @@ class Node{
             Node hijo;
             Node ax;
             int ruleid; // an iterator returns a number identifying a rule
-            int childCount = 0;
+            childCount = 0;
             int g;
             aux = this->state;
             open.push(*this);
@@ -118,10 +137,6 @@ class Node{
                 //printf("\n");
                 //printf("Su heuristica es: %d\n", actual.fh);
                 if(is_goal(&state)){
-                    printf("Es el puto goal\n");
-                    print_state(stdout, &state);
-                    printf("Revise: %d\n", childCount);
-                    printf("Profundidad: %d\n",g);
                     return g;
                 }
                 const int *best_dist = state_map_get(costos, &state);
@@ -144,38 +159,38 @@ class Node{
 
 int main(int argc, char **argv ) {
     // VARIABLES FOR INPUT
+    signal(SIGTERM, sig_handler);
     char str[MAX_LINE_LENGTH + 1];
     ssize_t nchars; 
-    state_t state;
     int resp = 0;
     // VARIABLES FOR ITERATING THROUGH state's SUCCESSORS
 
     // READ A LINE OF INPUT FROM stdin
-    printf("Please enter a state followed by ENTER: ");
+    //printf("Please enter a state followed by ENTER: ");
     if( fgets(str, sizeof str, stdin) == NULL ) {
         printf("Error: empty input line.\n");
         return 0; 
     }
 
     // CONVERT THE STRING TO A STATE
-    nchars = read_state(str, &state);
+    nchars = read_state(str, &stateI);
     if( nchars <= 0 ) {
         printf("Error: invalid state entered.\n");
         return 0; 
     }
 
-    printf("The state you entered is: ");
-    print_state(stdout, &state);
-    printf("\n");
+    //printf("The state you entered is: ");
+    //print_state(stdout, &stateI);
+    //printf("\n");
 
     Node raiz;
-    raiz = raiz.make_root_node(state);
+    raiz = raiz.make_root_node(stateI);
+    clock_t start = clock(), diff;
     resp = raiz.aestrella(0);
-    if(resp != -1){
-        ;
-    }
-    else{
-        printf("El nodo goal no esalcanzable.\n");
-    }
+    diff = clock() - start; 
+    t = (double) 
+    diff / CLOCKS_PER_SEC;
+    printing(resp);
+    return 0;
 }
 

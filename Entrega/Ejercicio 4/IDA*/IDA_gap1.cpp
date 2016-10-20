@@ -14,21 +14,22 @@ using namespace std;
 state_t state;
 state_t aux_state;
 vector<const char*> path;
-double t = -1;
-double childCount = 0;
+double tiempo = -1;
+int childCount = 0;
+int h0;
 
-void printing(int len){
+void printing(int len) {
     printf("X, A*, gap, pancake28, \"");
     print_state(stdout, &state);
-    if(len < 0){
-        printf("\", na, na, na, na\n");
+    if (len < 0) {
+        printf("\", %d, na, na, na, na\n", h0);
     } else {
-        printf("\", %d, %.0lf, %f, %.5e\n", len, childCount, t, childCount/t);
+        printf("\", %d, %d, %.0lf, %f, %.5e\n", h0, len, childCount, t, childCount/t);
     }
 }
 
 void sig_handler(int SIG){
-    printing(-1);
+    printing(-1,h0);
     exit(0);
 }
 
@@ -69,13 +70,11 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g){
 		apply_fwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
 		++childCount;
-		if (h_gap_28p(state) < UINT_MAX) {
-			path.push_back(get_fwd_rule_label(ruleid));
-			result = f_bounded_dfs_visit(bound, cost);
-			if (result.first) return result;
-			t = min(t, result.second);
-			path.pop_back();
-		}
+		path.push_back(get_fwd_rule_label(ruleid));
+		result = f_bounded_dfs_visit(bound, cost);
+		if (result.first) return result;
+		t = min(t, result.second);
+		path.pop_back();
 		apply_fwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
 	}
@@ -102,7 +101,7 @@ int main(){
     ssize_t nchars; 
     // Leer un estado de la entrada estandar.
     //printf("Please enter a state followed by ENTER: ");
-    if( fgets(str, sizeof str, stdin) == NULL ) {
+    if (fgets(str, sizeof str, stdin) == NULL) {
         printf("Error: empty input line.\n");
         return 0; 
     }
@@ -116,27 +115,16 @@ int main(){
 
     // Algoritmo de busqueda IDA*
     clock_t start = clock(), diff;
+    h0 = h_gap_28p(state);
     try {
     	costo = ida_search();
     }
     catch (const std::bad_alloc&) {
-      printing(-1);
+      printing(-1,h0);
       exit(0);
     }
     diff = clock() - start; 
-    t = (double)diff / CLOCKS_PER_SEC;
-    printing(costo);
-    
-
-    // Impresion de resultados de la busqueda
-    //printf("The final state is: ");
-    //print_state(stdout, &state);
-    //printf("\n");
-    //printf("El numero de hijos explorados es: %d\n", childCount);
-    //printf("El costo de la solucion es: %d\n", costo);
-    //unsigned int size = path.size();
-    //cout << "Acciones realizadas: ";
-  	//for (unsigned i=0; i<size; i++) cout << ' ' << path[i];
-  	//cout << '\n';
+    tiempo = (double)diff / CLOCKS_PER_SEC;
+    printing(costo,h0);
     return 1;
 }

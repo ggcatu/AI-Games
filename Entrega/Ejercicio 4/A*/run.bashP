@@ -1,0 +1,9 @@
+#!/bin/bash
+
+while read line
+do 
+  echo "$line" | timeout 600s ./aest >> pancake28.txt &
+
+  [ $(jobs | wc -l) -ge $(nproc) ] && wait
+  
+done < pancake28est.txt

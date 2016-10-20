@@ -43,7 +43,7 @@ unsigned mtable15[16] = {6,5,4,3,5,4,3,2,4,3,2,1,3,2,1,0};
 unsigned* mtable[16] = {mtable0,mtable1,mtable2,mtable3,mtable4,mtable5,mtable6,mtable7,mtable8,mtable9,mtable10,mtable11,mtable12,mtable13,mtable14,mtable15};
 
 void printing(int len){
-    printf("X, A*, 15Puzzle, \"");
+    printf("X, A*, gap, pancake28, \"");
     print_state(stdout, &stateI);
     if(len < 0){
         printf("\", na, na, na, na\n");
@@ -186,7 +186,13 @@ int main(int argc, char **argv ) {
     Node raiz;
     raiz = raiz.make_root_node(stateI);
     clock_t start = clock(), diff;
-    resp = raiz.aestrella(0);
+    try {
+      resp = raiz.aestrella(0);
+    }
+    catch (const std::bad_alloc&) {
+      printing(-1);
+      exit(0);
+    }
     diff = clock() - start; 
     t = (double) 
     diff / CLOCKS_PER_SEC;

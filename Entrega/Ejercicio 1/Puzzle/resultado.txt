@@ -1,0 +1,78 @@
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 
+Profundidad 0 : 1.000000 
+Profundidad 1 : 2.000000 
+Profundidad 2 : 6.000000 
+Profundidad 3 : 17.000000 
+Profundidad 4 : 53.000000 
+Profundidad 5 : 157.000000 
+Profundidad 6 : 483.000000 
+Profundidad 7 : 1450.000000 
+Profundidad 8 : 4426.000000 
+Profundidad 9 : 13361.000000 
+Profundidad 10 : 40635.000000 
+Profundidad 11 : 122969.000000 
+Profundidad 12 : 373373.000000 
+Profundidad 13 : 1131142.000000 
+Profundidad 14 : 3431970.000000 
+Profundidad 15 : 10402381.000000 
+Profundidad 16 : 31551133.000000 
+Profundidad 17 : 95653493.000000 
+Profundidad 18 : 290080335.000000 
+Profundidad 19 : 879523718.000000 
+Profundidad 20 : 2667079286.000000 
+Branching factor: 3.032413
+Profundidad para nodos mayores a estados: 15.776960 
+Superio|| 39916800.000000 
+Estados|| 39916800.000000 
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 
+Profundidad 0 : 1.000000 
+Profundidad 1 : 2.000000 
+Profundidad 2 : 4.000000 
+Profundidad 3 : 9.000000 
+Profundidad 4 : 20.000000 
+Profundidad 5 : 37.000000 
+Profundidad 6 : 64.000000 
+Profundidad 7 : 128.000000 
+Profundidad 8 : 255.000000 
+Profundidad 9 : 491.000000 
+Profundidad 10 : 937.000000 
+Profundidad 11 : 1802.000000 
+Profundidad 12 : 3507.000000 
+Profundidad 13 : 6760.000000 
+Profundidad 14 : 13000.000000 
+Profundidad 15 : 25143.000000 
+Profundidad 16 : 48619.000000 
+Profundidad 17 : 93757.000000 
+Profundidad 18 : 180666.000000 
+Profundidad 19 : 348899.000000 
+Profundidad 20 : 674340.000000 
+Branching factor: 1.932766
+Profundidad para nodos mayores a estados: 26.560826 
+Superio|| 39916800.000000 
+Estados|| 39916800.000000 
+El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 
+Profundidad 0 : 1.000000 
+Profundidad 1 : 2.000000 
+Profundidad 2 : 4.000000 
+Profundidad 3 : 9.000000 
+Profundidad 4 : 20.000000 
+Profundidad 5 : 37.000000 
+Profundidad 6 : 64.000000 
+Profundidad 7 : 128.000000 
+Profundidad 8 : 255.000000 
+Profundidad 9 : 491.000000 
+Profundidad 10 : 937.000000 
+Profundidad 11 : 1802.000000 
+Profundidad 12 : 3507.000000 
+Profundidad 13 : 6760.000000 
+Profundidad 14 : 13000.000000 
+Profundidad 15 : 25143.000000 
+Profundidad 16 : 48619.000000 
+Profundidad 17 : 93757.000000 
+Profundidad 18 : 180666.000000 
+Profundidad 19 : 348899.000000 
+Profundidad 20 : 674340.000000 
+Branching factor: 1.932766
+Profundidad para nodos mayores a estados: 26.560826 
+Superio|| 39916800.000000 
+Estados|| 39916800.000000 

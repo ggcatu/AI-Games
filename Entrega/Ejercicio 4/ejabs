@@ -1,4 +1,0 @@
-abstraction_t abs1;
-
-abs1 =read_abstraction_from_file(cosa)
-

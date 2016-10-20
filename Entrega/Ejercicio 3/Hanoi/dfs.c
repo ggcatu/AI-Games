@@ -24,10 +24,9 @@ void printing(int len){
     if(len < 0){
         printf("\", na, na, na, na\n");
     } else {
-        printf("\", %d, %f, %f, %.5e\n", len, nodes, t, nodes/t);
+        printf("\", %d, %.0lf, %f, %.5e\n", len, nodes, t, nodes/t);
     }
 }
-
 
 void dfs(state_t * nodo, int deep, int history){
     nodes++;
@@ -42,11 +41,11 @@ void dfs(state_t * nodo, int deep, int history){
     ruleid_iterator_t iter;
     int ruleid; 
     int childCount;
-    init_bwd_iter(&iter, nodo);
+    init_fwd_iter(&iter, nodo);
     while( (ruleid = next_ruleid(&iter)) >= 0 ) {
-        if (bwd_rule_valid_for_history(history, ruleid) == 0) continue;
-        childHistory = next_bwd_history(history, ruleid);
-        apply_bwd_rule(ruleid, nodo, &child);
+        if (fwd_rule_valid_for_history(history, ruleid) == 0) continue;
+        childHistory = next_fwd_history(history, ruleid);
+        apply_fwd_rule(ruleid, nodo, &child);
         dfs(&child, deep-1, childHistory);
         if (done){
             break;

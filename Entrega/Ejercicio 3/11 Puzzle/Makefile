@@ -3,7 +3,7 @@ CC = gcc
 CXX = g++
 OPT = -g -Wall -O3 -Wno-unused-function -Wno-unused-variable
 PSVNOPT = --no_state_map --no_abstraction --backwards_moves --history_len=$(LEN)
-FOLDER = ../../
+FOLDER = ../../../
 psvn2c_core.c:
 	cp $(FOLDER)src/psvn2c_core.c ./psvn2c_core.c
 

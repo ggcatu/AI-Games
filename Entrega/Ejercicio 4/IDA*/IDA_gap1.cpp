@@ -8,9 +8,10 @@
 #include <vector>
 #include <climits>
 #include <iostream>
+#include <time.h>
 using namespace std;
 
-state_t state, stateI;
+state_t state;
 state_t aux_state;
 vector<const char*> path;
 double t = -1;
@@ -18,7 +19,7 @@ double childCount = 0;
 
 void printing(int len){
     printf("X, A*, gap, pancake28, \"");
-    print_state(stdout, &stateI);
+    print_state(stdout, &state);
     if(len < 0){
         printf("\", na, na, na, na\n");
     } else {
@@ -30,6 +31,7 @@ void sig_handler(int SIG){
     printing(-1);
     exit(0);
 }
+
 unsigned int h_gap_28p(state_t state){
 	unsigned int gaps = 0;
 	for (int i = 0; i < 27; i++){
@@ -62,16 +64,18 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g){
 	ruleid_iterator_t iter;
 	int ruleid;
 	init_fwd_iter(&iter, &state);
-	while ((ruleid = next_ruleid(&iter)) >= 0) {
+	while ((ruleid = next_ruleid(&iter)) >= 0){
 		cost = g + get_fwd_rule_cost(ruleid);
 		apply_fwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
 		++childCount;
-		path.push_back(get_fwd_rule_label(ruleid));
-		result = f_bounded_dfs_visit(bound, cost);
-		if (result.first) return result;
-		t = min(t, result.second);
-		path.pop_back();
+		if (h_gap_28p(state) < UINT_MAX) {
+			path.push_back(get_fwd_rule_label(ruleid));
+			result = f_bounded_dfs_visit(bound, cost);
+			if (result.first) return result;
+			t = min(t, result.second);
+			path.pop_back();
+		}
 		apply_fwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
 	}
@@ -109,7 +113,7 @@ int main(){
         printf("Error: invalid state entered.\n");
         return 0; 
     }
-    copy_state(&stateI,&state);
+
     // Algoritmo de busqueda IDA*
     clock_t start = clock(), diff;
     try {
@@ -122,6 +126,7 @@ int main(){
     diff = clock() - start; 
     t = (double)diff / CLOCKS_PER_SEC;
     printing(costo);
+    
 
     // Impresion de resultados de la busqueda
     //printf("The final state is: ");

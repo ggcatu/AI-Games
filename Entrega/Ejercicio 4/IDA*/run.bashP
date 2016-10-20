@@ -2,7 +2,7 @@
 
 while read line
 do 
-  echo "$line" | timeout 600s ./IdaPan >> pancake28Ida.txt &
+  echo "$line" | timeout 600s ./IdaPan >> pancake28Ida2.txt &
 
   [ $(jobs | wc -l) -ge 3 ] && wait
   

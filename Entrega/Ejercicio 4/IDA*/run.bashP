@@ -1,0 +1,9 @@
+#!/bin/bash
+
+while read line
+do 
+  echo "$line" | timeout 600s ./IdaPan >> pancake28Ida.txt &
+
+  [ $(jobs | wc -l) -ge 3 ] && wait
+  
+done < pancake28est.txt

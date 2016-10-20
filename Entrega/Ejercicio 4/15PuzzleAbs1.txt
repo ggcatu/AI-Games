@@ -1,4 +1,10 @@
-abstraction {
-16 { 0 1 2 3 0 0 6 7 0 0 0 0 0 0 0 0 }
-projection { K K K K K K K K K K K K K K K K }
-}
+map 16 4 0
+map 16 5 0
+map 16 8 0
+map 16 9 0
+map 16 10 0
+map 16 11 0
+map 16 12 0
+map 16 13 0
+map 16 14 0
+map 16 15 0

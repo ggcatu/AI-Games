@@ -194,8 +194,7 @@ int main(int argc, char **argv ) {
       exit(0);
     }
     diff = clock() - start; 
-    t = (double) 
-    diff / CLOCKS_PER_SEC;
+    t = (double)diff / CLOCKS_PER_SEC;
     printing(resp);
     return 0;
 }

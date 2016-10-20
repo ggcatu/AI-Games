@@ -18,9 +18,9 @@ psvn2c_abstraction.c:
 
 .PRECIOUS: %.c
 
-%.succ: %.c ../global/succ.c
-	$(CC) $(OPT) ../global/succ.c -include $< -o $@
-	rm -f $*.c
+%.succ: %.cpp succ.cpp
+	$(CC) $(OPT) succ.cpp -include $< -o $@
+	rm -f $*.cpp
 
 .PHONY: clean
 clean:

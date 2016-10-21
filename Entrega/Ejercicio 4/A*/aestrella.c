@@ -51,12 +51,12 @@ unsigned mtable15[16] = {6,5,4,3,5,4,3,2,4,3,2,1,3,2,1,0};
 unsigned* mtable[16] = {mtable0,mtable1,mtable2,mtable3,mtable4,mtable5,mtable6,mtable7,mtable8,mtable9,mtable10,mtable11,mtable12,mtable13,mtable14,mtable15};
 
 void printing(int len, int h0){
-    printf("X, A*, gap, pancake28, \"");
+    printf("X, A*, manhattan, 15puzzle, \"");
     print_state(stdout, &stateI);
     if(len < 0){
         printf("\", na, %d, na, na, na\n",h0);
     } else {
-        printf("\", %d, %d, %.0lf, %f, %.5e\n",len,h0, childCount, t, childCount/t);
+        printf("\", %d, %d, %.0lf, %f, %.5e\n",len, h0, childCount, t, childCount/t);
     }
 }
 
@@ -178,26 +178,33 @@ class Node{
 
 
 int main(int argc, char **argv ) {
+    int tipo = 0;
+    if(argc > 1){
+        tipo = atoi(argv[1]);
+    }
     // VARIABLES FOR INPUT
     signal(SIGTERM, sig_handler);
     char str[MAX_LINE_LENGTH + 1];
     ssize_t nchars; 
     int resp = 0;
-    //Abstraccion  
-    abst1 = read_abstraction_from_file("15PuzzleAbs1.abst");
-    FILE *pdb_file1 = fopen("15PuzzleAbs1.pdb", "r");
-    pdb1 = read_state_map(pdb_file1);
-    fclose(pdb_file1);
+    //Abstraccion 
+    if(tipo == 1){
+        abst1 = read_abstraction_from_file("15PuzzleAbs1.abst");
+        FILE *pdb_file1 = fopen("15PuzzleAbs1.pdb", "r");
+        pdb1 = read_state_map(pdb_file1);
+        fclose(pdb_file1);
 
-    abst2 = read_abstraction_from_file("15PuzzleAbs2.abst");
-    FILE *pdb_file2 = fopen("15PuzzleAbs2.pdb", "r");
-    pdb2 = read_state_map(pdb_file2);
-    fclose(pdb_file2);
+        abst2 = read_abstraction_from_file("15PuzzleAbs2.abst");
+        FILE *pdb_file2 = fopen("15PuzzleAbs2.pdb", "r");
+        pdb2 = read_state_map(pdb_file2);
+        fclose(pdb_file2);
 
-    abst3 = read_abstraction_from_file("15PuzzleAbs3.abst");
-    FILE *pdb_file3 = fopen("15PuzzleAbs3.pdb", "r");
-    pdb3 = read_state_map(pdb_file3);
-    fclose(pdb_file3);
+        abst3 = read_abstraction_from_file("15PuzzleAbs3.abst");
+        FILE *pdb_file3 = fopen("15PuzzleAbs3.pdb", "r");
+        pdb3 = read_state_map(pdb_file3);
+        fclose(pdb_file3);
+    } 
+
 
     // VARIABLES FOR ITERATING THROUGH state's SUCCESSORS
 
@@ -220,10 +227,10 @@ int main(int argc, char **argv ) {
     //printf("\n");
     Node raiz;
     raiz = raiz.make_root_node(stateI);
-    h0 = raiz.heuristica(0);
+    h0 = raiz.heuristica(tipo);
     clock_t start = clock(), diff;
     try {
-      resp = raiz.aestrella(0);
+      resp = raiz.aestrella(tipo);
     }
     catch (const std::bad_alloc&) {
       printing(-1,h0);

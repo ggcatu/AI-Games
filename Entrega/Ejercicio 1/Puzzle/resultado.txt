@@ -1,3 +1,4 @@
+Sufijo de tamaño 0
 El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 
 Profundidad 0 : 1.000000 
 Profundidad 1 : 2.000000 
@@ -22,8 +23,11 @@ Profundidad 19 : 879523718.000000
 Profundidad 20 : 2667079286.000000 
 Branching factor: 3.032413
 Profundidad para nodos mayores a estados: 15.776960 
+Profundidad para nodos mayores a estados: 16
 Superio|| 39916800.000000 
 Estados|| 39916800.000000 
+
+Sufijo de tamaño 1
 El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 
 Profundidad 0 : 1.000000 
 Profundidad 1 : 2.000000 
@@ -48,8 +52,11 @@ Profundidad 19 : 348899.000000
 Profundidad 20 : 674340.000000 
 Branching factor: 1.932766
 Profundidad para nodos mayores a estados: 26.560826 
+Profundidad para nodos mayores a estados: 27 
 Superio|| 39916800.000000 
 Estados|| 39916800.000000 
+
+Sufijo de tamaño 2
 El nodo inicial: 0 1 2 3 4 5 6 7 8 9 10 11 
 Profundidad 0 : 1.000000 
 Profundidad 1 : 2.000000 
@@ -74,5 +81,6 @@ Profundidad 19 : 348899.000000
 Profundidad 20 : 674340.000000 
 Branching factor: 1.932766
 Profundidad para nodos mayores a estados: 26.560826 
+Profundidad para nodos mayores a estados: 27
 Superio|| 39916800.000000 
 Estados|| 39916800.000000 

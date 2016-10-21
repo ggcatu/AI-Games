@@ -1,1 +1,0 @@
-grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec

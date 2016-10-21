@@ -1,4 +1,4 @@
-LEN = 2
+LEN = 1
 CC = gcc
 CXX = g++
 OPT = -g -Wall -O3 -Wno-unused-function -Wno-unused-variable

@@ -5,30 +5,46 @@
 #include <inttypes.h>
 #include <assert.h>
 #include <sys/time.h>
-#include <vector>
 #include <climits>
+#include <time.h>
 using namespace std;
 
 state_t initial;
 state_t state;
 state_t aux_state;
+float peso;
 double tiempo = -1;
 double childCount = 0;
 int h0;
-abstraction_t *abst1;
-abstraction_t *abst2;
-abstraction_t *abst3;
-state_map_t *pdb1;
-state_map_t *pdb3;
-state_map_t *pdb2;
+
+unsigned mtable0[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+unsigned mtable1[16] = {1,0,1,2,2,1,2,3,3,2,3,4,4,3,4,5};
+unsigned mtable2[16] = {2,1,0,1,3,2,1,2,4,3,2,3,5,4,3,4};
+unsigned mtable3[16] = {3,2,1,0,4,3,2,1,5,4,3,2,6,5,4,3};
+unsigned mtable4[16] = {1,2,3,4,0,1,2,3,1,2,3,4,2,3,4,5};
+unsigned mtable5[16] = {2,1,2,3,1,0,1,2,2,1,2,3,3,2,3,4};
+unsigned mtable6[16] = {3,2,1,2,2,1,0,1,3,2,1,2,4,3,2,3};
+unsigned mtable7[16] = {4,3,2,1,3,2,1,0,4,3,2,1,5,4,3,2};
+unsigned mtable8[16] = {2,3,4,5,1,2,3,4,0,1,2,3,1,2,3,4};
+unsigned mtable9[16] = {3,2,3,4,2,1,2,3,1,0,1,2,2,1,2,3};
+unsigned mtable10[16] = {4,3,2,3,3,2,1,2,2,1,0,1,3,2,1,2};
+unsigned mtable11[16] = {5,4,3,2,4,3,2,1,3,2,1,0,4,3,2,1};
+unsigned mtable12[16] = {3,4,5,6,2,3,4,5,1,2,3,4,0,1,2,3};
+unsigned mtable13[16] = {4,3,4,5,3,2,3,4,2,1,2,3,1,0,1,2};
+unsigned mtable14[16] = {5,4,3,4,4,3,2,3,3,2,1,2,2,1,0,1};
+unsigned mtable15[16] = {6,5,4,3,5,4,3,2,4,3,2,1,3,2,1,0};
+
+unsigned* mtable[16] = {mtable0,mtable1,mtable2,mtable3,mtable4,mtable5,
+						mtable6,mtable7,mtable8,mtable9,mtable10,mtable11,
+						mtable12,mtable13,mtable14,mtable15};
 
 void printing(int len) {
-    printf("X, IDA*, PDB5+5+5, 15puzzle, \"");
+    printf("X, IDA*, manhattan, %f, 15Puzzle, \"", peso);
     print_state(stdout, &initial);
     if (len < 0) {
         printf("\", na, %d, na, na, na\n", h0);
     } else {
-        printf("\", %d, %d, %.0lf, %f, %.5e\n", len, h0, childCount, tiempo, 
+        printf("\", %d, %d, %.0lf, %f, %.5e\n",len, h0, childCount, tiempo, 
         	   childCount/tiempo);
     }
 }
@@ -38,21 +54,18 @@ void sig_handler(int SIG){
     exit(0);
 }
 
-unsigned int h_pdb(state_t state){
+unsigned int h_manhattan(state_t state){
 	int total = 0;
-    abstract_state(abst1, &state, &aux_state);
-    total += *state_map_get(pdb1, &aux_state);
-    abstract_state(abst2, &state, &aux_state);
-    total += *state_map_get(pdb2, &aux_state);
-    abstract_state(abst3, &state, &aux_state);
-    total += *state_map_get(pdb3, &aux_state);
+    for (int i = 0; i < 16; i++) {
+        total += mtable[state.vars[i]][i];
+    }
     return total;
 }
 
 pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
-											int history){
-	pair<bool,unsigned> result;
-	unsigned int f = g + h_pdb(state);
+									 float peso, int history) {
+	pair<bool,unsigned int> result;
+	unsigned int f = g + (int)(peso * h_manhattan(state));
 	if (f > bound) {
 		result.first = false;
 		result.second = f;
@@ -78,7 +91,7 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 		childHistory = next_fwd_history(history, ruleid);
 		copy_state(&state, &aux_state);
 		++childCount;
-		result = f_bounded_dfs_visit(bound, cost, childHistory);
+		result = f_bounded_dfs_visit(bound, cost, peso, childHistory);
 		if (result.first) return result;
 		t = min(t, result.second);
 		apply_bwd_rule(ruleid, &state, &aux_state);
@@ -89,61 +102,50 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 	return result;
 }
 
-unsigned int ida_search(){
-	unsigned int bound = h_pdb(state);
+int wida_search(float peso){
+	unsigned int bound = peso * h_manhattan(state);
 	int history;
 	childCount = 0;
 	while (true) {
 		history = init_history;
-		pair<bool,unsigned int> p = f_bounded_dfs_visit(bound, 0, history);
+		pair<bool,float> p = f_bounded_dfs_visit(bound, 0, peso, history);
 		if (p.first) return p.second;
 		bound = p.second;
 	}
 }
 
-int main(){
-	// VARIABLES FOR INPUT
+int main(int argc, char *argv[]){
+	if (argc != 2) {
+		printf("Uso: %s pesoHeuristica\n", argv[0]);
+		return 0;
+	}
+	peso = atof(argv[1]);
+	if (peso < 1) {
+		printf("El peso de la heuristica no puede ser negativo, ni menor a 1.\n");
+		return 0;
+	}
+
+	unsigned int costo;
 	signal(SIGTERM, sig_handler);
     char str[256];
     ssize_t nchars; 
-    // Leer un estado de la entrada estandar.
-    //printf("Please enter a state followed by ENTER: ");
     if (fgets(str, sizeof str, stdin) == NULL) {
         printf("Error: linea de entrada vacia.\n");
         return 0; 
     }
 
-    // Convertir el string en un estado state_t.
     nchars = read_state(str, &state);
     if( nchars <= 0 ) {
         printf("Error: estado de entrada invalido.\n");
         return 0; 
     }
 
-    unsigned int costo;
-    FILE *pdb_file;
-
-    abst1 = read_abstraction_from_file("15PuzzleAbs1.abst");
-    pdb_file = fopen("15PuzzleAbs1.pdb", "r");
-    pdb1 = read_state_map(pdb_file);
-    fclose(pdb_file);
-
-    abst2 = read_abstraction_from_file("15PuzzleAbs2.abst");
-    pdb_file = fopen("15PuzzleAbs2.pdb", "r");
-    pdb2 = read_state_map(pdb_file);
-    fclose(pdb_file);
-
-    abst3 = read_abstraction_from_file("15PuzzleAbs3.abst");
-    pdb_file = fopen("15PuzzleAbs3.pdb", "r");
-    pdb3 = read_state_map(pdb_file);
-    fclose(pdb_file);
-  
     // Algoritmo de busqueda IDA*
     copy_state(&initial, &state);
-    h0 = h_pdb(initial);
+    h0 = peso * h_manhattan(initial);
     clock_t start = clock(), diff;
     try {
-    	costo = ida_search();
+    	costo = wida_search(peso);
     }
     catch (const std::bad_alloc&) {
       printing(-1);

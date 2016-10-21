@@ -5,28 +5,23 @@
 #include <inttypes.h>
 #include <assert.h>
 #include <sys/time.h>
-#include <vector>
-#include <climits>
+#include <cfloat>
+#include <time.h>
 using namespace std;
 
 state_t initial;
 state_t state;
 state_t aux_state;
+float peso;
 double tiempo = -1;
 double childCount = 0;
 int h0;
-abstraction_t *abst1;
-abstraction_t *abst2;
-abstraction_t *abst3;
-state_map_t *pdb1;
-state_map_t *pdb3;
-state_map_t *pdb2;
 
 void printing(int len) {
-    printf("X, IDA*, PDB5+5+5, 15puzzle, \"");
+    printf("X, WIDA*, gap, %d, pancakes28, \"", peso);
     print_state(stdout, &initial);
     if (len < 0) {
-        printf("\", na, %d, na, na, na\n", h0);
+        printf("\", %d, na, na, na, na\n", h0);
     } else {
         printf("\", %d, %d, %.0lf, %f, %.5e\n", len, h0, childCount, tiempo, 
         	   childCount/tiempo);
@@ -38,21 +33,22 @@ void sig_handler(int SIG){
     exit(0);
 }
 
-unsigned int h_pdb(state_t state){
-	int total = 0;
-    abstract_state(abst1, &state, &aux_state);
-    total += *state_map_get(pdb1, &aux_state);
-    abstract_state(abst2, &state, &aux_state);
-    total += *state_map_get(pdb2, &aux_state);
-    abstract_state(abst3, &state, &aux_state);
-    total += *state_map_get(pdb3, &aux_state);
-    return total;
+unsigned int h_gap_28p(state_t state){
+	unsigned int gaps = 0;
+	for (int i = 0; i < 27; i++){
+		if (abs(state.vars[i] - state.vars[i+1]) > 1) {
+			gaps++;
+		}
+	}
+	if (state.vars[27] != 27) {
+		gaps++;
+	}
+	return gaps;
 }
 
-pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
-											int history){
-	pair<bool,unsigned> result;
-	unsigned int f = g + h_pdb(state);
+pair<bool,float> f_bounded_dfs_visit(float bound, float g, float peso, int history) {
+	pair<bool,float> result;
+	float f = g + (peso * (float)h_gap_28p(state));
 	if (f > bound) {
 		result.first = false;
 		result.second = f;
@@ -63,25 +59,23 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 		result.second = g;
 		return result;
 	}
-	unsigned int t = UINT_MAX;
-	unsigned int cost;
+	float t = FLT_MAX;
+	float cost;
 	ruleid_iterator_t iter;
-	ruleid_iterator_t iterb;
 	int ruleid;
 	int childHistory;
 	init_fwd_iter(&iter, &state);
-	init_bwd_iter(&iterb, &state);
 	while ((ruleid = next_ruleid(&iter)) >= 0){
 		if (fwd_rule_valid_for_history(history, ruleid) == 0) continue;
-		apply_fwd_rule(ruleid, &state, &aux_state);
-		cost = g + get_fwd_rule_cost(ruleid);
+		cost = g + (float)get_fwd_rule_cost(ruleid);
 		childHistory = next_fwd_history(history, ruleid);
+		apply_fwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
 		++childCount;
-		result = f_bounded_dfs_visit(bound, cost, childHistory);
+		result = f_bounded_dfs_visit(bound, cost, peso, childHistory);
 		if (result.first) return result;
 		t = min(t, result.second);
-		apply_bwd_rule(ruleid, &state, &aux_state);
+		apply_fwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
 	}
 	result.first = false;
@@ -89,20 +83,29 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 	return result;
 }
 
-unsigned int ida_search(){
-	unsigned int bound = h_pdb(state);
+float wida_search(float peso){
+	float bound = peso * (float)h_gap_28p(state);
 	int history;
-	childCount = 0;
 	while (true) {
+		childCount = 0;
 		history = init_history;
-		pair<bool,unsigned int> p = f_bounded_dfs_visit(bound, 0, history);
+		pair<bool,unsigned int> p = f_bounded_dfs_visit(bound, 0, peso, history);
 		if (p.first) return p.second;
 		bound = p.second;
 	}
 }
 
-int main(){
-	// VARIABLES FOR INPUT
+int main(int argc, char *argv[]){
+	if (argc != 2) {
+		printf("Uso: %s pesoHeuristica\n", argv[0]);
+		return 0;
+	}
+	peso = atof(argv[1]);
+	if (peso < 1) {
+		printf("El peso de la heuristica no puede ser negativo, ni menor a 1.\n");
+		return 0;
+	}	
+	unsigned int costo;
 	signal(SIGTERM, sig_handler);
     char str[256];
     ssize_t nchars; 
@@ -120,30 +123,12 @@ int main(){
         return 0; 
     }
 
-    unsigned int costo;
-    FILE *pdb_file;
-
-    abst1 = read_abstraction_from_file("15PuzzleAbs1.abst");
-    pdb_file = fopen("15PuzzleAbs1.pdb", "r");
-    pdb1 = read_state_map(pdb_file);
-    fclose(pdb_file);
-
-    abst2 = read_abstraction_from_file("15PuzzleAbs2.abst");
-    pdb_file = fopen("15PuzzleAbs2.pdb", "r");
-    pdb2 = read_state_map(pdb_file);
-    fclose(pdb_file);
-
-    abst3 = read_abstraction_from_file("15PuzzleAbs3.abst");
-    pdb_file = fopen("15PuzzleAbs3.pdb", "r");
-    pdb3 = read_state_map(pdb_file);
-    fclose(pdb_file);
-  
     // Algoritmo de busqueda IDA*
     copy_state(&initial, &state);
-    h0 = h_pdb(initial);
+    h0 = h_gap_28p(initial);
     clock_t start = clock(), diff;
     try {
-    	costo = ida_search();
+    	costo = (int)wida_search(peso);
     }
     catch (const std::bad_alloc&) {
       printing(-1);

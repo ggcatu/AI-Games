@@ -1,0 +1,19 @@
+INSTRUCCIONES PARA COMPILAR
+	Si desea compilar alguno de los codigos fuentes debe utilizar la
+instruccion make seguida del nombre del archivo (en formato .cpp) que
+desea compilar sin la extension. Por ejemplo, si quisiera compilar el
+archivo IDA_gap.cpp (correspondiente al algoritmo de busqueda IDA* 
+con heuristica gap) debe ejecutar en su shell:
+	
+	make IDA_gap
+
+INSTRUCCIONES PARA EJECUTAR
+	Si desea ejecutar alguno de los algoritmos de busqueda (luego de
+compilado) debe ejecutar ./nombreEjecutable. Por ejemplo, si quisiera 
+ejecutar IDA_gap (correspondiente al algoritmo de busqueda IDA* con 
+heuristica gap) debe ejecutar en el shell:
+
+	./IDA_gap
+
+Seguidamente, el prompt esperara a que se introduzca un estado valido
+para el problema, en este ejemplo, un estado valido para 28-Pancakes.

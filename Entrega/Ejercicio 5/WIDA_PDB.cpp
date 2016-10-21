@@ -7,28 +7,30 @@
 #include <sys/time.h>
 #include <vector>
 #include <climits>
+#include <iostream>
 using namespace std;
 
 state_t initial;
 state_t state;
 state_t aux_state;
-double tiempo = -1;
-double childCount = 0;
-int h0;
 abstraction_t *abst1;
 abstraction_t *abst2;
 abstraction_t *abst3;
 state_map_t *pdb1;
 state_map_t *pdb3;
 state_map_t *pdb2;
+float peso;
+double tiempo = -1;
+double childCount = 0;
+int h0;
 
 void printing(int len) {
-    printf("X, IDA*, PDB5+5+5, 15puzzle, \"");
+    printf("X, IDA*, PDB5+5+5, %f, 15puzzle, \"", peso);
     print_state(stdout, &initial);
     if (len < 0) {
         printf("\", na, %d, na, na, na\n", h0);
     } else {
-        printf("\", %d, %d, %.0lf, %f, %.5e\n", len, h0, childCount, tiempo, 
+        printf("\", %d, %d, %.0lf, %f, %.5e\n",len, h0, childCount, tiempo, 
         	   childCount/tiempo);
     }
 }
@@ -50,9 +52,9 @@ unsigned int h_pdb(state_t state){
 }
 
 pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
-											int history){
+											float peso, int history){
 	pair<bool,unsigned> result;
-	unsigned int f = g + h_pdb(state);
+	unsigned int f = g + (peso * h_pdb(state));
 	if (f > bound) {
 		result.first = false;
 		result.second = f;
@@ -78,7 +80,7 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 		childHistory = next_fwd_history(history, ruleid);
 		copy_state(&state, &aux_state);
 		++childCount;
-		result = f_bounded_dfs_visit(bound, cost, childHistory);
+		result = f_bounded_dfs_visit(bound, cost, peso, childHistory);
 		if (result.first) return result;
 		t = min(t, result.second);
 		apply_bwd_rule(ruleid, &state, &aux_state);
@@ -89,20 +91,29 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 	return result;
 }
 
-unsigned int ida_search(){
-	unsigned int bound = h_pdb(state);
+unsigned int wida_search(float peso){
+	unsigned int bound = peso * h_pdb(state);
 	int history;
 	childCount = 0;
 	while (true) {
 		history = init_history;
-		pair<bool,unsigned int> p = f_bounded_dfs_visit(bound, 0, history);
+		pair<bool,unsigned int> p = f_bounded_dfs_visit(bound, 0, peso, history);
 		if (p.first) return p.second;
 		bound = p.second;
 	}
 }
 
-int main(){
-	// VARIABLES FOR INPUT
+int main(int argc, char *argv[]){
+	if (argc != 2) {
+        printf("Uso: %s pesoHeuristica\n", argv[0]);
+        return 0;
+    }
+    peso = atof(argv[1]);
+    if (peso < 1) {
+        printf("El peso de la heuristica no puede ser negativo, ni menor a 1.\n");
+        return 0;
+    }
+
 	signal(SIGTERM, sig_handler);
     char str[256];
     ssize_t nchars; 
@@ -140,10 +151,10 @@ int main(){
   
     // Algoritmo de busqueda IDA*
     copy_state(&initial, &state);
-    h0 = h_pdb(initial);
+    h0 = peso * h_pdb(initial);
     clock_t start = clock(), diff;
     try {
-    	costo = ida_search();
+    	costo = wida_search(peso);
     }
     catch (const std::bad_alloc&) {
       printing(-1);

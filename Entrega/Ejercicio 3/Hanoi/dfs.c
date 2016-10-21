@@ -19,7 +19,7 @@ double t = -1;
 state_t inicial;
 
 void printing(int len){
-    printf("X, dfid, pancake16, \"");
+    printf("X, dfid, hanoi4_14, \"");
     print_state(stdout, &inicial);
     if(len < 0){
         printf("\", na, na, na, na\n");

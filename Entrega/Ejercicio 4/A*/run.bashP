@@ -1,8 +1,10 @@
 #!/bin/bash
 
+echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> pancake28A.txt
+
 while read line
 do 
-  echo "$line" | timeout 600s ./aest >> pancake28.txt &
+  echo "$line" | timeout 600s ./pancakes.aestrella_2 2 >> pancake28A.txt &
 
   [ $(jobs | wc -l) -ge $(nproc) ] && wait
   

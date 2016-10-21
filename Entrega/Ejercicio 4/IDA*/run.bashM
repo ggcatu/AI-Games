@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> 15PuzzleIdaM.txt
+
+while read line
+do 
+  echo "$line" | timeout 600s ./15Puzzle.IDA_manhattan_2 >> 15PuzzleIdaM.txt &
+
+  [ $(jobs | wc -l) -ge 3 ] && wait
+  
+done < korf.txt

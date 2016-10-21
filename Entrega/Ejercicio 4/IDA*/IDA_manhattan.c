@@ -39,7 +39,7 @@ unsigned* mtable[16] = {mtable0,mtable1,mtable2,mtable3,mtable4,mtable5,
 						mtable12,mtable13,mtable14,mtable15};
 
 void printing(int len) {
-    printf("X, IDA*, manhattan, 15Puzzle, \"");
+    printf("X, IDA*, gap, pancakes28, \"");
     print_state(stdout, &initial);
     if (len < 0) {
         printf("\", na, %d, na, na, na\n", h0);
@@ -65,7 +65,13 @@ unsigned int h_manhattan(state_t state){
 pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
 											int history){
 	pair<bool,unsigned> result;
+	//printf("Costo en la f: %d\n", g);
 	unsigned int f = g + h_manhattan(state);
+	//printf("Estado actual: ");
+	//print_state(stdout,&state);
+	//printf("\n");
+	//printf("Heuristica: %d\n", h_manhattan(state));
+	//printf("f : %d\n", f);
 	if (f > bound) {
 		result.first = false;
 		result.second = f;
@@ -89,13 +95,22 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 		apply_fwd_rule(ruleid, &state, &aux_state);
 		cost = g + get_fwd_rule_cost(ruleid);
 		childHistory = next_fwd_history(history, ruleid);
+		//printf("Estado actual: ");
+		//print_state(stdout,&state);
+		//printf("\n");
 		copy_state(&state, &aux_state);
+		//printf("Estado hijo: ");
+		//print_state(stdout,&state);
+		//printf("\n");
+		//printf("Costo hijo: %d\n", cost);
+		//printf("\n");
 		++childCount;
 		result = f_bounded_dfs_visit(bound, cost, childHistory);
 		if (result.first) return result;
 		t = min(t, result.second);
 		apply_bwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
+		//if (childCount > 20) break;
 	}
 	result.first = false;
 	result.second = t;
@@ -111,19 +126,24 @@ unsigned int ida_search(){
 		pair<bool,unsigned int> p = f_bounded_dfs_visit(bound, 0, history);
 		if (p.first) return p.second;
 		bound = p.second;
+		//if (childCount > 20) break;
 	}
 }
 
 int main(){
+	// VARIABLES FOR INPUT
 	unsigned int costo;
 	signal(SIGTERM, sig_handler);
     char str[256];
     ssize_t nchars; 
+    // Leer un estado de la entrada estandar.
+    //printf("Please enter a state followed by ENTER: ");
     if (fgets(str, sizeof str, stdin) == NULL) {
         printf("Error: linea de entrada vacia.\n");
         return 0; 
     }
 
+    // Convertir el string en un estado state_t.
     nchars = read_state(str, &state);
     if( nchars <= 0 ) {
         printf("Error: estado de entrada invalido.\n");

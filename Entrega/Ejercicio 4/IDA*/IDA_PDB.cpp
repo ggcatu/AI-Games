@@ -23,27 +23,6 @@ state_map_t *pdb1;
 state_map_t *pdb3;
 state_map_t *pdb2;
 
-unsigned mtable0[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-unsigned mtable1[16] = {1,0,1,2,2,1,2,3,3,2,3,4,4,3,4,5};
-unsigned mtable2[16] = {2,1,0,1,3,2,1,2,4,3,2,3,5,4,3,4};
-unsigned mtable3[16] = {3,2,1,0,4,3,2,1,5,4,3,2,6,5,4,3};
-unsigned mtable4[16] = {1,2,3,4,0,1,2,3,1,2,3,4,2,3,4,5};
-unsigned mtable5[16] = {2,1,2,3,1,0,1,2,2,1,2,3,3,2,3,4};
-unsigned mtable6[16] = {3,2,1,2,2,1,0,1,3,2,1,2,4,3,2,3};
-unsigned mtable7[16] = {4,3,2,1,3,2,1,0,4,3,2,1,5,4,3,2};
-unsigned mtable8[16] = {2,3,4,5,1,2,3,4,0,1,2,3,1,2,3,4};
-unsigned mtable9[16] = {3,2,3,4,2,1,2,3,1,0,1,2,2,1,2,3};
-unsigned mtable10[16] = {4,3,2,3,3,2,1,2,2,1,0,1,3,2,1,2};
-unsigned mtable11[16] = {5,4,3,2,4,3,2,1,3,2,1,0,4,3,2,1};
-unsigned mtable12[16] = {3,4,5,6,2,3,4,5,1,2,3,4,0,1,2,3};
-unsigned mtable13[16] = {4,3,4,5,3,2,3,4,2,1,2,3,1,0,1,2};
-unsigned mtable14[16] = {5,4,3,4,4,3,2,3,3,2,1,2,2,1,0,1};
-unsigned mtable15[16] = {6,5,4,3,5,4,3,2,4,3,2,1,3,2,1,0};
-
-unsigned* mtable[16] = {mtable0,mtable1,mtable2,mtable3,mtable4,mtable5,
-						mtable6,mtable7,mtable8,mtable9,mtable10,mtable11,
-						mtable12,mtable13,mtable14,mtable15};
-
 void printing(int len) {
     printf("X, IDA*, PDB5+5+5, 15puzzle, \"");
     print_state(stdout, &initial);
@@ -159,26 +138,7 @@ int main(){
     pdb_file = fopen("15PuzzleAbs3.pdb", "r");
     pdb3 = read_state_map(pdb_file);
     fclose(pdb_file);
-
-    abstract_state(abst1, &state, &aux_state);
-    printf("Estado abstraido 1: ");
-    print_state(stdout, &aux_state);
-    printf("\n");
-
-
-    abstract_state(abst2, &state, &aux_state);
-    printf("Estado abstraido 2: ");
-    print_state(stdout, &aux_state);
-    printf("\n");
-
-    abstract_state(abst3, &state, &aux_state);
-    printf("Estado abstraido 3: ");
-    print_state(stdout, &aux_state);
-    printf("\n");
-
-    int gol = h_pdb(state);
-	printf("Valor de la heuristica: %d\n", gol);    
-
+  
     // Algoritmo de busqueda IDA*
     copy_state(&initial, &state);
     h0 = h_pdb(initial);

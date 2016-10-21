@@ -1,4 +1,4 @@
-grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec
+grupo, algorithm, domain, instance, cost, generated, time, gen_per_sec
 X, dfid, hanoi_4_14, "0 0 1 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 ", 1, 8, 0.000007, 1.14286e+06
 X, dfid, hanoi_4_14, "1 0 0 0 0 1 0 0 0 0 0 1 0 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 ", 7, 365859, 0.018978, 1.92781e+07
 X, dfid, hanoi_4_14, "0 0 0 1 0 0 0 1 0 1 0 0 0 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 ", 7, 563153, 0.028805, 1.95505e+07

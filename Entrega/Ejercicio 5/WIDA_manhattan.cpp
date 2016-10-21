@@ -39,7 +39,7 @@ unsigned* mtable[16] = {mtable0,mtable1,mtable2,mtable3,mtable4,mtable5,
 						mtable12,mtable13,mtable14,mtable15};
 
 void printing(int len) {
-    printf("X, IDA*, manhattan, %f, 15Puzzle, \"", peso);
+    printf("X, WIDA*, manhattan, %f, 15Puzzle, \"", peso);
     print_state(stdout, &initial);
     if (len < 0) {
         printf("\", na, %d, na, na, na\n", h0);

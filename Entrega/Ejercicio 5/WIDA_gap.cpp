@@ -18,7 +18,7 @@ double childCount = 0;
 int h0;
 
 void printing(int len) {
-    printf("X, WIDA*, gap, %d, pancakes28, \"", peso);
+    printf("X, WIDA*, gap, %f, pancakes28, \"", peso);
     print_state(stdout, &initial);
     if (len < 0) {
         printf("\", %d, na, na, na, na\n", h0);

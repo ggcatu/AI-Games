@@ -25,7 +25,7 @@ double childCount = 0;
 int h0;
 
 void printing(int len) {
-    printf("X, IDA*, PDB5+5+5, %f, 15puzzle, \"", peso);
+    printf("X, WIDA*, PDB5+5+5, %f, 15puzzle, \"", peso);
     print_state(stdout, &initial);
     if (len < 0) {
         printf("\", na, %d, na, na, na\n", h0);

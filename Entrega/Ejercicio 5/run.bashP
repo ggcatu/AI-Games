@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> pancake28Wida.csv
+
+while read line
+do 
+  echo "$line" | timeout 600s ./IDA_gap >> pancake28Wida.csv &
+
+  [ $(jobs | wc -l) -ge 3 ] && wait
+  
+done < pancake28.txt

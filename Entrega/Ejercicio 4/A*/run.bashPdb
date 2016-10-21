@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ulimit -v 2097152
+echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> 15PuzzleAPdb.csv
+
+while read line
+do 
+  echo "$line" | timeout 600s ./aestrella_puzzle 1 >> 15PuzzleAPdb.csv &
+
+  [ $(jobs | wc -l) -ge 3 ] && wait
+  
+done < 15puzzle_korf.txt

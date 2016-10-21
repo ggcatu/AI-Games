@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> 15PuzzleIdaM.txt
+echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> 15PuzzleIdaM.csv
 
 while read line
 do 
-  echo "$line" | timeout 600s ./15Puzzle.IDA_manhattan_2 >> 15PuzzleIdaM.txt &
+  echo "$line" | timeout 600s ./IDA_manhattan >> 15PuzzleIdaM.csv &
 
   [ $(jobs | wc -l) -ge 3 ] && wait
   
-done < korf.txt
+done < 15puzzle_korf.txt

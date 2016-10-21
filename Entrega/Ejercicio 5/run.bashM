@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> 15PuzzleWidaM.csv
+
+while read line
+do 
+  echo "$line" | timeout 600s ./WIDA_manhattan >> 15PuzzleWidaM.csv &
+
+  [ $(jobs | wc -l) -ge 3 ] && wait
+  
+done < 15puzzle_korf.txt

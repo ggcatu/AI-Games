@@ -42,9 +42,9 @@ void printing(int len) {
     printf("X, IDA*, gap, pancakes28, \"");
     print_state(stdout, &initial);
     if (len < 0) {
-        printf("\", %d, na, na, na, na\n", h0);
+        printf("\", na, %d, na, na, na\n", h0);
     } else {
-        printf("\", %d, %d, %.0lf, %f, %.5e\n", h0, len, childCount, tiempo, 
+        printf("\", %d, %d, %.0lf, %f, %.5e\n",len, h0, childCount, tiempo, 
         	   childCount/tiempo);
     }
 }
@@ -65,10 +65,13 @@ unsigned int h_manhattan(state_t state){
 pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
 											int history){
 	pair<bool,unsigned> result;
-	printf("Costo en la f: %d\n", g);
+	//printf("Costo en la f: %d\n", g);
 	unsigned int f = g + h_manhattan(state);
-	printf("Heuristica: %d\n", h_manhattan(state));
-	printf("f : %d\n", f);
+	//printf("Estado actual: ");
+	//print_state(stdout,&state);
+	//printf("\n");
+	//printf("Heuristica: %d\n", h_manhattan(state));
+	//printf("f : %d\n", f);
 	if (f > bound) {
 		result.first = false;
 		result.second = f;
@@ -89,25 +92,25 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 	init_bwd_iter(&iterb, &state);
 	while ((ruleid = next_ruleid(&iter)) >= 0){
 		if (fwd_rule_valid_for_history(history, ruleid) == 0) continue;
+		apply_fwd_rule(ruleid, &state, &aux_state);
 		cost = g + get_fwd_rule_cost(ruleid);
 		childHistory = next_fwd_history(history, ruleid);
-		apply_fwd_rule(ruleid, &state, &aux_state);
-		printf("Estado actual: ");
-		print_state(stdout,&state);
-		printf("\n");
+		//printf("Estado actual: ");
+		//print_state(stdout,&state);
+		//printf("\n");
 		copy_state(&state, &aux_state);
-		printf("Estado hijo: ");
-		print_state(stdout,&state);
-		printf("\n");
-		printf("Costo hijo: %d\n", cost);
-		printf("\n");
+		//printf("Estado hijo: ");
+		//print_state(stdout,&state);
+		//printf("\n");
+		//printf("Costo hijo: %d\n", cost);
+		//printf("\n");
 		++childCount;
 		result = f_bounded_dfs_visit(bound, cost, childHistory);
 		if (result.first) return result;
 		t = min(t, result.second);
 		apply_bwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
-		if (childCount > 20) break;
+		//if (childCount > 20) break;
 	}
 	result.first = false;
 	result.second = t;
@@ -117,13 +120,13 @@ pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g,
 unsigned int ida_search(){
 	unsigned int bound = h_manhattan(state);
 	int history;
+	childCount = 0;
 	while (true) {
-		childCount = 0;
 		history = init_history;
 		pair<bool,unsigned int> p = f_bounded_dfs_visit(bound, 0, history);
 		if (p.first) return p.second;
 		bound = p.second;
-		if (childCount > 20) break;
+		//if (childCount > 20) break;
 	}
 }
 

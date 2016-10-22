@@ -1,8 +1,3 @@
-/* This program reads a state from stdin and prints out its successors.
-
-Copyright (C) 2013 by the PSVN Research Group, University of Alberta
-*/
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
@@ -141,11 +136,11 @@ class Node{
             priority_queue<Node, vector<Node> > open;
             state_map_t *costos = new_state_map();
             state_t state, child,aux;
-            ruleid_iterator_t iter; // ruleid_terator_t is the type defined by the PSVN API successor/predecessor iterators.
+            ruleid_iterator_t iter; 
             Node actual;
             Node hijo;
             Node ax;
-            int ruleid; // an iterator returns a number identifying a rule
+            int ruleid;
             childCount = 0;
             int g;
             aux = this->state;
@@ -182,12 +177,10 @@ int main(int argc, char **argv ) {
     if(argc > 1){
         tipo = atoi(argv[1]);
     }
-    // VARIABLES FOR INPUT
     signal(SIGTERM, sig_handler);
     char str[MAX_LINE_LENGTH + 1];
     ssize_t nchars; 
     int resp = 0;
-    //Abstraccion 
     if(tipo == 1){
         abst1 = read_abstraction_from_file("15PuzzleAbs1.abst");
         FILE *pdb_file1 = fopen("15PuzzleAbs1.pdb", "r");
@@ -205,26 +198,17 @@ int main(int argc, char **argv ) {
         fclose(pdb_file3);
     } 
 
-
-    // VARIABLES FOR ITERATING THROUGH state's SUCCESSORS
-
-    // READ A LINE OF INPUT FROM stdin
-    //printf("Please enter a state followed by ENTER: ");
     if( fgets(str, sizeof str, stdin) == NULL ) {
         printf("Error: empty input line.\n");
         return 0; 
     }
 
-    // CONVERT THE STRING TO A STATE
     nchars = read_state(str, &stateI);
     if( nchars <= 0 ) {
         printf("Error: invalid state entered.\n");
         return 0; 
     }
 
-    //printf("The state you entered is: ");
-    //print_state(stdout, &stateI);
-    //printf("\n");
     Node raiz;
     raiz = raiz.make_root_node(stateI);
     h0 = raiz.heuristica(tipo);

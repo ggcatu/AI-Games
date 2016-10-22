@@ -1,0 +1,29 @@
+INSTRUCCIONES PARA COMPILAR
+	Si desea compilar el codigo fuentes debe utilizar la
+instruccion make seguida del nombre del archivo (en formato .c) que
+desea compilar sin la extension. Por ejemplo, para compilar el archi
+vo aestrella.c (correspondiente a la implementacion del algoritmo A*)
+debe ejecutar en su shell:
+	
+	make aestrella_gap (En caso de usar la heuristica gap para el pro
+	                    blema de las panquecas)
+	make aestrella_puzzle (En caso de querer correr el problema 
+	                       del 15Puzzle)
+
+Nota: Para el caso del 15Puzzle al realizar el make, generara automaticamente
+los pdb necesarios para la heuristica PDB 5+5+5
+
+INSTRUCCIONES PARA EJECUTAR
+	Si desea ejecutar alguno de los algoritmos de busqueda (luego de
+compilado) debe ejecutar ./nombreEjecutable seguido de un numero
+entero que representa el tipo de la heuristica que se usara. Los cuales
+son 0 (manhattan), 1 (pdb 5+5+5), 2 (gap), cualquier otro numero coloca
+ra por defecto la heuristica gap. Por lo tanto para correr el algoritmo
+mediante la consola debera ejecutar en su shell:
+
+	./aestrella_gap 2 (Para el problema de las panquecas)
+	./aestrella_puzzle 0 (Para el 15Puzzle con heuristica manhattan)
+	./aestrella_puzzle 1 (Para el 15Puzzle con heuristica PDB 5+5+5)
+
+Seguidamente, el prompt esperara a que se introduzca un estado valido
+para el problema, en este ejemplo, un estado valido para 28-Pancakes.

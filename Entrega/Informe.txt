@@ -1,3 +1,10 @@
+Todas las corridas fueron realizadas en una computadora con las siguientes 
+especificaciones:
+
+Procesador: Intel® Core™ i7-3770 CPU @ 3.40GHz × 8 
+RAM: 8GB
+SO: Ubuntu 14 64 bits
+
 Proyecto 1
 Inteligencia Artificial I
 
@@ -77,6 +84,26 @@ de cargadas en memoria las abstracciones y los PDB's simplemente consiste en
 tomar el estado, abstraerlo (con las tres abstraciones), buscar el valor que
 corresponde a su distancia Manhattan en el hash correspondiente y sumar esos
 tres valores.    
+
+Para A*, se implementó la version de Best-First-Search dada en clase agregando
+la heuristica deseada en cualquier problema, para la implementacion del algoritmo,
+se creo una clase nodo para facilitar el manejo de todas las variables necesarias
+en la corrida, esta clase contiene varios atributos los cuales son: el estado del 
+nodo, el padre del nodo, la regla con la cual se llego al nodo, la profundidad a la
+cual esta el nodo, la funcion heuristica del nodo, de esta misma forma cuenta con 3 
+funciones las cuales se encargan de calcular la heuristica de cada problema. Se 
+utilizo la cola de prioridades de c++ y se diseño la funcion de comparacion para los
+nodos. 
+
+En cuanto a las corridas del algoritmo, se observaron muy buenos resultados en todas
+las corridas, para el problema de 28 panquecas el tiempo de corrida fue bastante corto,
+las peores instancias tomaron entre 1 y 2 segundos mientras que el resto corrio en
+tiempos menores. Para el problema del 15Puzzle se pudo observar que la heuristica es
+muy influyente, a pesar de que se obtuvieron buenos resultados con ambas heuristicas,
+los resultados obtenidos con la heuristica PDB fueron mucho mejores que los obtenidos 
+con manhattan. La restriccion de memoria afecto a varias instancias del problema en 
+ambos casos, sin embargo con la heuristica manhattan fueron muchas mas las instancias
+que no pudieron ser completadas por falta de memoria.
 
 Para IDA* (Iterative deepening A*) se implementó la versión eficiente 
 presentada en la Lectura 14 (slides 2) puesto que se cumplían las condiciones

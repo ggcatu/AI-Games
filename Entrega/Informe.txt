@@ -1,10 +1,3 @@
-Todas las corridas fueron realizadas en una computadora con las siguientes 
-especificaciones:
-
-Procesador: Intel® Core™ i7-3770 CPU @ 3.40GHz × 8 
-RAM: 8GB
-SO: Ubuntu 14 64 bits
-
 Proyecto 1
 Inteligencia Artificial I
 
@@ -12,6 +5,12 @@ Inteligencia Artificial I
 12-11075 Anthony El Kareh
 12-10694 Eliot Díaz
 
+Todas las corridas fueron realizadas en una computadora con las siguientes 
+especificaciones:
+
+Procesador: Intel® Core™ i7-3770 CPU @ 3.40GHz × 8 
+RAM: 8GB
+SO: Ubuntu 14 64 bits
 
 
 				Ejercicio 1
@@ -104,19 +103,19 @@ los resultados obtenidos con la heuristica PDB fueron mucho mejores que los obte
 con manhattan. La restriccion de memoria afecto a varias instancias del problema en 
 ambos casos, sin embargo con la heuristica manhattan fueron muchas mas las instancias
 que no pudieron ser completadas por falta de memoria. Se muestran tablas con el prome-
-dio de los datos obtenidos en las corridas.
+dio de los datos obtenidos en las corridas, considerando un tiempo de 600 segundos 
+(tiempo límite) para aquellas instancias que no llegaron a la solución.
 
-15PuzzleAManh.csv
 Instancias:100
 Costo promedio: 48.66
 Hijos promedio: 25591297.02
-Tiempo promedio: 6.84759987
+Tiempo promedio: 48.84759987000001
 
 15PuzzleAPdb.csv
 Instancias:100
 Costo promedio: 52.39
 Hijos promedio: 12170693.86
-Tiempo promedio: 5.162024060000001
+Tiempo promedio: 11.16202406
 
 pancake28A.csv
 Instancias:220
@@ -124,9 +123,9 @@ Costo promedio: 26.704545454545453
 Hijos promedio: 308871.9090909091
 Tiempo promedio: 0.05341900000000004
 
-Podemos observar con los datos promedio, que lo anteriormente dicho si es cierto, la
-heuristica Pdb es superior a la manhattan mientras que el problema de las panquecas, 
-corre en un tiempo excepcional.
+Podemos observar con los datos promedio, que lo anteriormente dicho si es 
+cierto, la heuristica Pdb es superior a la manhattan mientras que el problema
+de las panquecas, corre en un tiempo excepcional.
 
 Para IDA* (Iterative deepening A*) se implementó la versión eficiente 
 presentada en la Lectura 14 (slides 2) puesto que se cumplían las condiciones
@@ -146,8 +145,22 @@ En la carpeta Entrega/Ejercicio 4/IDA* se encuentra el código fuente del
 algoritmo IDA* con cada heurística (por separado) de las antes nombradas. En 
 dicha carpeta se encuentran también las instrucciones para compilar cada archivo
 y los archivos .csv que contienen los resultados de resolver las instancias 
-dadas en el enunciado del proyecto. 
+dadas en el enunciado del proyecto.
 
+De los resultados se observa que en el 15-Puzzle, la heurística PDB genera una
+cantidad promedio de hijos considerablemente menor que la heurística Manhattan,
+aproximadamente 60 millones contra 370 millones de nodos hijos. Eso a su vez se
+traduce en una mayor eficiencia en tiempo de ejecución por parte de la primera
+heurística. Como el algoritmo halla el camino óptimo al estado final, el costo 
+promedio de solución no difiere. 
+
+Con respecto al algoritmo A*, IDA* para el problema 28-Pancakes arroja mejores
+resultados al revisar la mitad de hijos (128.774 contra 308871 aprox.) en promedio
+en una quinta parte del tiempo (0.01 segundos contra 0.053 aprox.).
+
+También se obtienen mejores resultados en el 15-Puzzle y estos resultados se 
+deben a la eficiencia lineal en memoria del algoritmo, que en definitiva le
+permiten generar y recorrer más nodos sin mucho impacto en tiempo. 
 
 				Ejercicio 5
 -------------------------------------------------------------------------------
@@ -161,9 +174,25 @@ Ejercicio 4.
 
 En la carpeta Entrega/Ejercicio 5/ se encuentra el código fuente del 
 algoritmo WIDA* con cada heurística (por separado) de las antes nombradas. En 
-dicha carpeta se encuentran también las instrucciones para compilar cada archivo
-y los archivos .csv que contienen los resultados de resolver las instancias 
-dadas en el enunciado del proyecto. 
+dicha carpeta se encuentran también las instrucciones para compilar cada 
+archivo y los archivos .csv que contienen los resultados de resolver las 
+instancias dadas en el enunciado del proyecto. 
+
+De los resultados se puede observar que para el 15-Puzzle, con un peso de 1.5
+en WIDA*, la heurística PDB 5+5+5 revisa menos nodos hijos en promedio 
+(357.128) en un menor tiempo promedio (aproximadamente 0.0539 segundos) con
+respecto a la heurística Manhattan que revisa en promedio 4.878.321 nodos hijos
+en 0.02425 segundos aproximadamente (en promedio). Sin embargo, la heurística 
+Manhattan consigue una solución a una profundidad promedio (56) menor a la 
+heurística PDB. Se puede observar el mismo fenómeno, para WIDA* con peso 2.
+
+Para el 15-Puzzle y el 28-Pancakes, si se comparan el tiempo promedio y el 
+número promedio de hijos generados con cualquier heurística, se observará que 
+el peso 2 para WIDA* arroja mejores resultados pero también consigue una 
+solución a mayor profundidad, lo que indica que la suboptimalidad de la misma 
+es mayor. Esto se debe, a que para el peso 2, la cota de iteración f crece con 
+mayor rapidez con respecto al peso 1.5 y por ende debe iterar menos veces y 
+recorrer menos cantidad de duplicados.
 
 
 

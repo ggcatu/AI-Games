@@ -1,19 +1,23 @@
 INSTRUCCIONES PARA COMPILAR
-	Si desea compilar alguno de los codigos fuentes debe utilizar la
-instruccion make seguida del nombre del archivo (en formato .cpp) que
-desea compilar sin la extension. Por ejemplo, si quisiera compilar el
+	Si desea compilar alguno de los códigos fuentes debe utilizar la
+instrucción make seguida del nombre del archivo (en formato .cpp) que
+desea compilar sin la extensión. Por ejemplo, si quisiera compilar el
 archivo IDA_gap.cpp (correspondiente al algoritmo de busqueda IDA* 
 con heuristica gap) debe ejecutar en su shell:
 	
 	make IDA_gap
 
+	Si se compila el archivo IDA_PDB.cpp se generarán además los 
+archivos .pdb (Pattern Data Base) y .abst (abstracciones) necesarios
+para la ejecución del algoritmo de búsqueda. 
+
 INSTRUCCIONES PARA EJECUTAR
-	Si desea ejecutar alguno de los algoritmos de busqueda (luego de
+	Si desea ejecutar alguno de los algoritmos de búsqueda (luego de
 compilado) debe ejecutar ./nombreEjecutable. Por ejemplo, si quisiera 
 ejecutar IDA_gap (correspondiente al algoritmo de busqueda IDA* con 
 heuristica gap) debe ejecutar en el shell:
 
 	./IDA_gap
 
-Seguidamente, el prompt esperara a que se introduzca un estado valido
-para el problema, en este ejemplo, un estado valido para 28-Pancakes.
+Seguidamente, el prompt esperará a que se introduzca un estado válido
+para el problema, en este ejemplo, un estado válido para 28-Pancakes.

@@ -1,0 +1,121 @@
+Proyecto 1
+Inteligencia Artificial I
+
+12-11006 Gabriel Gimenez
+12-11075 Anthony El Kareh
+12-10694 Eliot Díaz
+
+
+
+				Ejercicio 1
+-------------------------------------------------------------------------------
+Se implemento un DFS con una cota, para lograr el objetivo.
+
+El algoritmo se puede encontrar en /Entrega/dfs.c
+
+Se pudo notar que estos problemas, en general tienen factores de ramificacion 
+muy altos, lo que no permitia que en algunos casos la profundidad de busqueda 
+avanzara rapidamente, por la gran cantidad de nodos.
+
+Por otro lado, la eliminacion de generacion de padres y abuelos, vemos como 
+mejora nuestro factor de ramificacion, disminuyendolo, y tratando de crear 
+escenarios mucho mas manejables
+
+
+				Ejercicio 2
+-------------------------------------------------------------------------------
+Se utilizaron los resultados del DFS, y se aprovecharon los mismos.
+
+Una vez contado los nodos y el factor de ramificacion empirico, se busco n tal 
+que ramificacion^n > estados => n = log(estados)/log(ramificacion).
+
+Todos los ejercicios contienen su DFS, donde solo difieren los #DEFINE al 
+comienzo del archivo donde se especifica la profundidad desdeada + 1, junto con
+la cantidad de estados del problema.
+
+Los resultados devueltos por N deben ser interpretados como n = ceil(n), pues 
+ciertamente no se consideran corridas no discretas.
+
+
+				Ejercicio 3
+-------------------------------------------------------------------------------
+Se implemento el algoritmo IDDFS para atacar el problema, incrementando la cota
+de 1 en 1, con el objetivo de encontrar el costo del camino minimo.
+
+Ciertamente al ser un algoritmo de busqueda ciega, la cantidad de nodos 
+explorados asi como generados es bastante alta, respecto a otros algoritmos 
+informados. 
+
+Varios de los casos de prueba no lograban ser resueltos antes de los 10 minutos,
+pero podiamos ver como algunos tardaban hasta 8 minutos en ser resueltos. Una 
+vez mas, la complejidad se encontraba en los altos factores de ramificacion, 
+asi como que los goal se encontraban a distancias mas profundas.
+
+				
+				Ejercicio 4
+-------------------------------------------------------------------------------
+
+La heurística Gap para el problema del N-Pancakes se implementó siguiendo la
+especificación teórica que se encuentra en el paper Helmert's Gap Heuristic con
+la única diferencia de que conocido el número de panquecas de las instancias a
+resolver (28 panquecas) se fijó el tamaño del ciclo que recorre el estado dado 
+y cuenta el número de brechas entre panquecas (gaps) para ahorrar tiempo.
+
+La heurística Manhattan para el problema del N-Puzzle se implementó de acuerdo
+a la versión presentada en la Lectura 12 (slides 2) que hace uso de más memoria
+que la tradicional (utiliza solo el estado para computar la heurística) a cambio
+de eficiencia, específicamente un rendimiento O(n) con una mejor constante
+escondida. Esta versión de la heurística pre-computa la distancia Manhattan 
+para cada tile en toda posición del tablero, lo almacena en arreglos y accede a
+ellos para calcular la distancia de una configuración dada.
+
+Para generar la heurística con Pattern Data Base (PDB) 5+5+5 en el N-Puzzle se
+consideraron las particiones presentadas en la página 290 (Figura 3) del 
+paper Felner et al.'s paper on Additive PDBs, que agrupa las piezas 1,2,4,5,8;
+3,6,7,10,11 y 9,12,13,14,15 en abstracciones distintas. La heurística, luego 
+de cargadas en memoria las abstracciones y los PDB's simplemente consiste en 
+tomar el estado, abstraerlo (con las tres abstraciones), buscar el valor que
+corresponde a su distancia Manhattan en el hash correspondiente y sumar esos
+tres valores.    
+
+Para IDA* (Iterative deepening A*) se implementó la versión eficiente 
+presentada en la Lectura 14 (slides 2) puesto que se cumplían las condiciones
+safe y gol-aware para las tres heurísticas a utilizar (Gap para N-pancakes,
+Manhattan para N-Puzzle y PDB 5+5+5 para N-Puzzle) y se cumplía la condición de
+que todo operador es invertible en ambos problemas: en el caso de N-Pancakes 
+todo operador es su propio inverso y en el caso de N-Puzzle basta con "mover" 
+la pieza blanca justo en la dirección contraria, es decir, si se movio hacia la
+derecha, el operador inverso consistirá en mover la pieza hacia la izquierda.
+
+Esta decisión permite utilizar un par de variables globales para almacenar y 
+modificar los estados, en lugar de la estructura de nodos que se plantea como
+primera implementación, lo cual reduce el impacto del algoritmo tanto en 
+memoria como en tiempo de ejecución.
+
+En la carpeta Entrega/Ejercicio 4/IDA* se encuentra el código fuente del 
+algoritmo IDA* con cada heurística (por separado) de las antes nombradas. En 
+dicha carpeta se encuentran también las instrucciones para compilar cada archivo
+y los archivos .csv que contienen los resultados de resolver las instancias 
+dadas en el enunciado del proyecto. 
+
+
+				Ejercicio 5
+-------------------------------------------------------------------------------
+Para la implementación del Weighted IDA* (WIDA*) se tomó el código de fuente 
+del Ejercicio 4 y se agregó el parámetro peso a las subrutinas ida_search
+(renombrada wida_search) y f_bounded_dfs_visit, es decir, se utilizó la
+implementación antes explicada. 
+
+De igual forma, las heurísticas utilizadas corresponden a las explicadas en el
+Ejercicio 4.
+
+En la carpeta Entrega/Ejercicio 5/ se encuentra el código fuente del 
+algoritmo WIDA* con cada heurística (por separado) de las antes nombradas. En 
+dicha carpeta se encuentran también las instrucciones para compilar cada archivo
+y los archivos .csv que contienen los resultados de resolver las instancias 
+dadas en el enunciado del proyecto. 
+
+
+
+
+

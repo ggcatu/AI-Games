@@ -52,9 +52,9 @@ unsigned int h_pdb(state_t state){
 }
 
 pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
-											float peso, int history){
+											float peso, int history) {
 	pair<bool,unsigned> result;
-	unsigned int f = g + (peso * h_pdb(state));
+	unsigned int f = g + (int)(peso * h_pdb(state));
 	if (f > bound) {
 		result.first = false;
 		result.second = f;

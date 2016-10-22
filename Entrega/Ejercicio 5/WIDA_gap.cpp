@@ -5,7 +5,7 @@
 #include <inttypes.h>
 #include <assert.h>
 #include <sys/time.h>
-#include <cfloat>
+#include <climits>
 #include <time.h>
 using namespace std;
 
@@ -46,9 +46,10 @@ unsigned int h_gap_28p(state_t state){
 	return gaps;
 }
 
-pair<bool,float> f_bounded_dfs_visit(float bound, float g, float peso, int history) {
-	pair<bool,float> result;
-	float f = g + (peso * (float)h_gap_28p(state));
+pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
+											float peso, int history) {
+	pair<bool,unsigned int> result;
+	unsigned int f = g + (int)(peso * h_gap_28p(state));
 	if (f > bound) {
 		result.first = false;
 		result.second = f;
@@ -59,15 +60,15 @@ pair<bool,float> f_bounded_dfs_visit(float bound, float g, float peso, int histo
 		result.second = g;
 		return result;
 	}
-	float t = FLT_MAX;
-	float cost;
+	unsigned int t = UINT_MAX;
+	unsigned int cost;
 	ruleid_iterator_t iter;
 	int ruleid;
 	int childHistory;
 	init_fwd_iter(&iter, &state);
 	while ((ruleid = next_ruleid(&iter)) >= 0){
 		if (fwd_rule_valid_for_history(history, ruleid) == 0) continue;
-		cost = g + (float)get_fwd_rule_cost(ruleid);
+		cost = g + get_fwd_rule_cost(ruleid);
 		childHistory = next_fwd_history(history, ruleid);
 		apply_fwd_rule(ruleid, &state, &aux_state);
 		copy_state(&state, &aux_state);
@@ -84,7 +85,7 @@ pair<bool,float> f_bounded_dfs_visit(float bound, float g, float peso, int histo
 }
 
 float wida_search(float peso){
-	float bound = peso * (float)h_gap_28p(state);
+	unsigned int bound = peso * h_gap_28p(state);
 	int history;
 	while (true) {
 		childCount = 0;
@@ -125,10 +126,10 @@ int main(int argc, char *argv[]){
 
     // Algoritmo de busqueda IDA*
     copy_state(&initial, &state);
-    h0 = h_gap_28p(initial);
+    h0 = peso * h_gap_28p(initial);
     clock_t start = clock(), diff;
     try {
-    	costo = (int)wida_search(peso);
+    	costo = wida_search(peso);
     }
     catch (const std::bad_alloc&) {
       printing(-1);

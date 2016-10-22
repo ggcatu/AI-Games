@@ -63,7 +63,7 @@ unsigned int h_manhattan(state_t state){
 }
 
 pair<bool,unsigned int> f_bounded_dfs_visit(unsigned int bound, unsigned int g, 
-									 float peso, int history) {
+									 		float peso, int history) {
 	pair<bool,unsigned int> result;
 	unsigned int f = g + (int)(peso * h_manhattan(state));
 	if (f > bound) {

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> 15PuzzleWidaPdb.csv
+echo "grupo, algorithm, heuristic, domain, instance, cost, h0, generated, time, gen_per_sec" >> 15PuzzleWidaPdb2.csv
 
 while read line
 do 
-  echo "$line" | timeout 600s ./WIDA_PDB >> 15PuzzleWidaPdb.csv &
+  echo "$line" | timeout 600s ./WIDA_PDB 2 >> 15PuzzleWidaPdb2.csv &
 
   [ $(jobs | wc -l) -ge 3 ] && wait
   
-done < 15puzzle_korf.txt
+done < ../../instances/15puzzle_korf.txt

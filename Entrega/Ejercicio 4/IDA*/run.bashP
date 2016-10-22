@@ -8,4 +8,4 @@ do
 
   [ $(jobs | wc -l) -ge 3 ] && wait
   
-done < pancake28.txt
+done < ../../../instances/pancake28.txt

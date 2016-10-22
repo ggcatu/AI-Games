@@ -32,7 +32,7 @@ aestrella_gap: pancakes28.c ./aestrella.c
 	g++ $(OPT) ./aestrella.c -include $< -o $@ -lm
 	rm -f pancakes28.c
 
-aestrella_puzzle: 15Puzzle.c ./aestrella.c
+aestrella_puzzle: 15Puzzle.c ./aestrella.c pdb
 	g++ $(OPT) ./aestrella.c -include $< -o $@ -lm
 	rm -f 15Puzzle.c
 

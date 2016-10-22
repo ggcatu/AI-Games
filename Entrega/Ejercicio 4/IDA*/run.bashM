@@ -8,4 +8,4 @@ do
 
   [ $(jobs | wc -l) -ge 3 ] && wait
   
-done < 15puzzle_korf.txt
+done < ../../../instances/15puzzle_korf.txt

@@ -45,7 +45,7 @@ WIDA_manhattan: 15Puzzle.c ./WIDA_manhattan.cpp
 	g++ $(OPT) ./WIDA_manhattan.cpp -include $< -o $@ -lm
 	rm -f 15Puzzle.c
 
-WIDA_PDB: 15Puzzle_2.c ./WIDA_PDB.cpp
+WIDA_PDB: 15Puzzle_2.c ./WIDA_PDB.cpp pdb
 	g++ $(OPT) ./WIDA_PDB.cpp -include $< -o $@ -lm
 	rm -f 15Puzzle_2.c
 

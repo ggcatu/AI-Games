@@ -45,7 +45,7 @@ IDA_manhattan: 15Puzzle.c ./IDA_manhattan.cpp
 	g++ $(OPT) ./IDA_manhattan.cpp -include $< -o $@ -lm
 	rm -f 15Puzzle.c
 
-IDA_PDB: 15Puzzle_2.c ./IDA_PDB.cpp
+IDA_PDB: 15Puzzle_2.c ./IDA_PDB.cpp pdb
 	g++ $(OPT) ./IDA_PDB.cpp -include $< -o $@ -lm
 	rm -f 15Puzzle_2.c
 

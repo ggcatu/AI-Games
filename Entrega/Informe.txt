@@ -103,7 +103,30 @@ muy influyente, a pesar de que se obtuvieron buenos resultados con ambas heurist
 los resultados obtenidos con la heuristica PDB fueron mucho mejores que los obtenidos 
 con manhattan. La restriccion de memoria afecto a varias instancias del problema en 
 ambos casos, sin embargo con la heuristica manhattan fueron muchas mas las instancias
-que no pudieron ser completadas por falta de memoria.
+que no pudieron ser completadas por falta de memoria. Se muestran tablas con el prome-
+dio de los datos obtenidos en las corridas.
+
+15PuzzleAManh.csv
+Instancias:100
+Costo promedio: 48.66
+Hijos promedio: 25591297.02
+Tiempo promedio: 6.84759987
+
+15PuzzleAPdb.csv
+Instancias:100
+Costo promedio: 52.39
+Hijos promedio: 12170693.86
+Tiempo promedio: 5.162024060000001
+
+pancake28A.csv
+Instancias:220
+Costo promedio: 26.704545454545453
+Hijos promedio: 308871.9090909091
+Tiempo promedio: 0.05341900000000004
+
+Podemos observar con los datos promedio, que lo anteriormente dicho si es cierto, la
+heuristica Pdb es superior a la manhattan mientras que el problema de las panquecas, 
+corre en un tiempo excepcional.
 
 Para IDA* (Iterative deepening A*) se implementó la versión eficiente 
 presentada en la Lectura 14 (slides 2) puesto que se cumplían las condiciones
